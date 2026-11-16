@@ -1,0 +1,8 @@
+.no-encontrada {
+  min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem; padding: 2rem 16px; text-align: center;
+}
+.no-encontrada img { width: 96px; opacity: .5; }
+.no-encontrada h1 { margin: 0; }
+.no-encontrada p { margin: 0; }
+.no-encontrada a:hover { text-decoration: none; }

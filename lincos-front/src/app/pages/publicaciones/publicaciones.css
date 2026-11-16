@@ -1,0 +1,17 @@
+.encabezado { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; }
+.encabezado .titulo-pagina { margin: 0; }
+
+.orden { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--superficie); border: 1px solid var(--borde); }
+.orden button {
+  padding: .45rem .9rem; border-radius: 999px; border: 1px solid transparent; background: none; cursor: pointer;
+  color: var(--texto-secundario); font: 500 .88rem var(--fuente-texto); transition: color .15s, border-color .15s;
+}
+.orden button:hover { color: var(--texto); }
+.orden button.activo { color: var(--texto); border-color: var(--turquesa); background: rgba(29, 211, 176, .08); }
+
+.lista { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+app-spinner { margin: 1.5rem 0; }
+.centinela { height: 1px; }
+.estado { display: flex; flex-direction: column; align-items: center; gap: .75rem; margin-top: 1rem; }
+.vacio, .fin { margin: 0; padding: 2rem 0; text-align: center; color: var(--texto-secundario); }
+.fin { padding: 1.5rem 0 0; font-size: .85rem; }

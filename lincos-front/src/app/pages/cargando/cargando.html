@@ -1,0 +1,9 @@
+<main class="cargando">
+  <app-logo class="logo" [conEslogan]="true" />
+
+  <app-spinner [tamano]="120" [mensaje]="mensaje()" />
+
+  <div class="progreso" aria-hidden="true">
+    <span [style.width.%]="progreso()"></span>
+  </div>
+</main>

@@ -1,0 +1,9 @@
+<img class="ojo" src="spinner-ojo.gif" alt="" [style.width.px]="tamano()" [style.height.px]="tamano()" />
+
+@if (mensaje()) {
+  <!-- track por el texto: cuando el mensaje cambia, Angular recrea el párrafo
+       y la animación de entrada se vuelve a ejecutar -->
+  @for (texto of [mensaje()]; track texto) {
+    <p class="mensaje" aria-live="polite">{{ texto }}</p>
+  }
+}

@@ -1,0 +1,54 @@
+<section class="crear">
+  @if (!abierto()) {
+    <div class="compacto">
+      <img class="avatar" [src]="usuario()?.imagenPerfil" alt="" />
+      <button type="button" class="disparador" (click)="abrir()">¿Qué estás investigando?</button>
+      <button type="button" class="btn btn-primario" (click)="abrir()" aria-label="Crear publicación">
+        <app-icono nombre="lapiz" /> <span class="texto-boton">Crear publicación</span>
+      </button>
+    </div>
+  } @else {
+    <form class="formulario" [formGroup]="form" (ngSubmit)="publicar()" novalidate
+          [attr.inert]="enviando() ? '' : null">
+      <div class="campo" [class.invalido]="invalido('titulo')">
+        <label for="titulo">Título</label>
+        <input id="titulo" formControlName="titulo" maxlength="120"
+               placeholder="Ej: Nueva señal de radio de origen desconocido" />
+        @if (invalido('titulo')) { <p class="campo-error">El título es obligatorio.</p> }
+      </div>
+
+      <div class="campo" [class.invalido]="invalido('descripcion')">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" formControlName="descripcion" rows="4" maxlength="2000"
+                  placeholder="Contá tu hipótesis, tus fuentes o lo que encontraste."></textarea>
+        <span class="contador">{{ form.controls.descripcion.value.length }}/2000</span>
+        @if (invalido('descripcion')) { <p class="campo-error">La descripción es obligatoria.</p> }
+      </div>
+
+      @if (vistaPrevia()) {
+        <div class="vista-previa">
+          <img [src]="vistaPrevia()" alt="Vista previa de la imagen" />
+          <button type="button" class="quitar" aria-label="Quitar imagen" (click)="quitarImagen(archivo)">
+            <app-icono nombre="cerrar" />
+          </button>
+        </div>
+      }
+      @if (errorImagen(); as mensaje) { <p class="campo-error">{{ mensaje }}</p> }
+      @if (error()) { <p class="alerta-error" role="alert">{{ error() }}</p> }
+
+      <div class="pie">
+        <label class="adjuntar" for="imagenPublicacion">
+          <app-icono nombre="imagen" /> Agregar imagen
+        </label>
+        <input #archivo id="imagenPublicacion" type="file" accept="image/jpeg,image/png,image/webp" hidden
+               (change)="seleccionarImagen($event)" />
+        <div class="botones">
+          <button type="button" class="btn btn-secundario" (click)="cancelar()">Cancelar</button>
+          <button type="submit" class="btn btn-primario" [disabled]="enviando()">
+            {{ enviando() ? 'Publicando…' : 'Publicar' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  }
+</section>

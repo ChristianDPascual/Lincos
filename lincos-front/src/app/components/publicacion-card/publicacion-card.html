@@ -1,0 +1,95 @@
+@let p = publicacion();
+
+<article class="tarjeta" [class.destacada]="destacada()">
+  <header class="cabecera">
+    <img class="avatar" [src]="p.autor.imagenPerfil" [alt]="'Foto de ' + p.autor.nombreUsuario" />
+    <div class="datos-autor">
+      <span class="nombre">{{ p.autor | nombreCompleto }}</span>
+      <!-- &#64; es la @: escrita directo, Angular la toma como inicio de un bloque -->
+      <span class="meta">
+        &#64;{{ p.autor.nombreUsuario }} ·
+        <time [attr.datetime]="p.createdAt" [title]="p.createdAt | date: &quot;EEEE d 'de' MMMM 'de' y, HH:mm&quot;">
+          {{ p.createdAt | tiempoRelativo }} · {{ p.createdAt | date: 'HH:mm' }}
+        </time>
+      </span>
+    </div>
+
+    @if (puedeEliminar() && !editando()) {
+      <div class="menu-contenedor">
+        <button type="button" class="boton-menu" aria-label="Opciones de la publicación"
+                (click)="menuAbierto.set(!menuAbierto())">
+          <app-icono nombre="mas" />
+        </button>
+        @if (menuAbierto()) {
+          <div class="menu-fondo" (click)="menuAbierto.set(false)"></div>
+          <div class="menu-desplegable" role="menu">
+            @if (esPropia()) {
+              <button type="button" role="menuitem" (click)="empezarEdicion()">
+                <app-icono nombre="lapiz" /> Editar publicación
+              </button>
+            }
+            <button type="button" role="menuitem" class="peligro" (click)="confirmarEliminacion()">
+              <app-icono nombre="basura" /> Eliminar publicación
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </header>
+
+  @if (editando()) {
+    <form class="edicion" [formGroup]="formEdicion" (ngSubmit)="guardarEdicion()" novalidate
+          [attr.inert]="guardando() ? '' : null">
+      <div class="campo" [class.invalido]="invalidoEdicion('titulo')">
+        <label [for]="'titulo-' + p._id">Título</label>
+        <input [id]="'titulo-' + p._id" formControlName="titulo" maxlength="120" />
+        @if (invalidoEdicion('titulo')) { <p class="campo-error">El título no puede estar vacío.</p> }
+      </div>
+      <div class="campo" [class.invalido]="invalidoEdicion('descripcion')">
+        <label [for]="'descripcion-' + p._id">Descripción</label>
+        <textarea [id]="'descripcion-' + p._id" formControlName="descripcion" rows="4" maxlength="2000"></textarea>
+        @if (invalidoEdicion('descripcion')) { <p class="campo-error">La descripción no puede estar vacía.</p> }
+      </div>
+      @if (errorEdicion()) { <p class="alerta-error" role="alert">{{ errorEdicion() }}</p> }
+      <div class="botones">
+        <button type="button" class="btn btn-secundario btn-chico" (click)="cancelarEdicion()">Cancelar</button>
+        <button type="submit" class="btn btn-primario btn-chico" [disabled]="guardando()">
+          {{ guardando() ? 'Guardando…' : 'Guardar cambios' }}
+        </button>
+      </div>
+    </form>
+  } @else {
+    <h2 class="titulo">{{ p.titulo }}</h2>
+    <p class="descripcion">{{ p.descripcion }}</p>
+  }
+
+  @if (p.imagen) {
+    <img class="imagen" [src]="p.imagen" [alt]="p.titulo" loading="lazy" />
+  }
+
+  @if (p.editada) {
+    <p class="editado">Esta publicación fue editada</p>
+  }
+
+  <footer class="acciones">
+    <!-- "Lo creo": el Me gusta del TP -->
+    <button type="button" class="accion" [class.activa]="p.meGusta" [class.propia]="esPropia()"
+            [disabled]="procesando() || esPropia()" [attr.aria-pressed]="p.meGusta"
+            [title]="esPropia() ? 'No podés marcar &quot;Lo creo&quot; en tu propia publicación' : (p.meGusta ? 'Ya no lo creo' : 'Lo creo')"
+            [attr.aria-label]="p.meGusta ? 'Quitar Lo creo' : 'Lo creo'"
+            (click)="alternarMeGusta()">
+      <app-icono [nombre]="p.meGusta ? 'ovni-lleno' : 'ovni'" />
+      {{ p.cantidadMeGusta }}
+      <span class="etiqueta">Lo creo</span>
+    </button>
+
+    @if (destacada()) {
+      <!-- En el detalle ya se ven los comentarios: el contador no es un link -->
+      <span class="accion informativa"><app-icono nombre="comentario" /> {{ p.cantidadComentarios }}</span>
+    } @else {
+      <a class="accion" [routerLink]="['/publicaciones', p._id]" aria-label="Ver comentarios">
+        <app-icono nombre="comentario" /> {{ p.cantidadComentarios }}
+      </a>
+    }
+  </footer>
+</article>

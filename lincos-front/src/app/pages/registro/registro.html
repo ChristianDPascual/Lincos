@@ -1,0 +1,24 @@
+<!-- inert: mientras carga, el fondo no recibe clics ni teclado -->
+<main class="auth-pantalla" [attr.inert]="cargando() ? '' : null">
+  <section class="auth-marca">
+    <app-logo [conEslogan]="true" />
+    <p>Una comunidad para cuestionar, investigar y conectar los puntos.</p>
+  </section>
+
+  <section class="auth-contenido">
+    <div class="auth-tarjeta ancha">
+      <app-logo class="auth-logo-movil" [conEslogan]="true" />
+
+      <h1>Crear cuenta</h1>
+      <p class="auth-subtitulo">Sumate a la comunidad y empezá a investigar.</p>
+
+      <app-form-usuario [cargando]="cargando()" [error]="error()" (enviar)="registrar($event)" />
+
+      <p class="auth-pie">¿Ya tenés cuenta? <a routerLink="/login">Iniciá sesión</a></p>
+    </div>
+  </section>
+</main>
+
+@if (cargando()) {
+  <app-spinner [pantallaCompleta]="true" [tamano]="120" [mensaje]="mensajeCarga()" />
+}

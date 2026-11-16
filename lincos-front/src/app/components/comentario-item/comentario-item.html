@@ -1,0 +1,64 @@
+@let c = comentario();
+
+<article class="comentario">
+  <img class="avatar" [src]="c.autor.imagenPerfil" [alt]="'Foto de ' + c.autor.nombreUsuario" />
+
+  <div class="cuerpo">
+    <header class="cabecera">
+      <div class="autor">
+        <span class="nombre">{{ c.autor | nombreCompleto }}</span>
+        <span class="meta">
+          &#64;{{ c.autor.nombreUsuario }} ·
+          <time [attr.datetime]="c.createdAt" [title]="c.createdAt | date: &quot;EEEE d 'de' MMMM 'de' y, HH:mm&quot;">
+            {{ c.createdAt | tiempoRelativo }} · {{ c.createdAt | date: 'HH:mm' }}
+          </time>
+        </span>
+      </div>
+
+      @if (puedeEliminar() && !editando()) {
+        <div class="menu-contenedor">
+          <button type="button" class="boton-menu" aria-label="Opciones del comentario"
+                  (click)="menuAbierto.set(!menuAbierto())">
+            <app-icono nombre="mas" />
+          </button>
+          @if (menuAbierto()) {
+            <div class="menu-fondo" (click)="menuAbierto.set(false)"></div>
+            <div class="menu-desplegable" role="menu">
+              @if (esPropio()) {
+                <button type="button" role="menuitem" (click)="empezarEdicion()">
+                  <app-icono nombre="lapiz" /> Editar comentario
+                </button>
+              }
+              <button type="button" role="menuitem" class="peligro" (click)="confirmarEliminacion()">
+                <app-icono nombre="basura" /> Eliminar comentario
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </header>
+
+    @if (editando()) {
+      <div class="edicion" [attr.inert]="guardando() ? '' : null">
+        <div class="campo" [class.invalido]="mensaje.touched && mensaje.invalid">
+          <textarea [formControl]="mensaje" rows="2" maxlength="500" aria-label="Editar comentario"></textarea>
+          @if (mensaje.touched && mensaje.invalid) {
+            <p class="campo-error">El comentario no puede estar vacío.</p>
+          }
+          @if (error()) { <p class="campo-error">{{ error() }}</p> }
+        </div>
+        <div class="botones">
+          <button type="button" class="btn btn-secundario btn-chico" (click)="cancelarEdicion()">Cancelar</button>
+          <button type="button" class="btn btn-primario btn-chico" [disabled]="guardando()" (click)="guardar()">
+            {{ guardando() ? 'Guardando…' : 'Guardar' }}
+          </button>
+        </div>
+      </div>
+    } @else {
+      <p class="mensaje">{{ c.mensaje }}</p>
+      @if (c.modificado) {
+        <p class="editado">Este comentario fue editado</p>
+      }
+    }
+  </div>
+</article>

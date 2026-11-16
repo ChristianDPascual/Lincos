@@ -1,0 +1,8 @@
+.password { position: relative; }
+.password input { padding-right: 5.5rem; }
+.ver {
+  position: absolute; right: .5rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: var(--texto-secundario);
+  font: 500 .8rem var(--fuente-texto); cursor: pointer; padding: .4rem .5rem;
+}
+.ver:hover { color: var(--texto); }

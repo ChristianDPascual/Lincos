@@ -1,0 +1,16 @@
+<aside class="sidebar">
+  <a routerLink="/publicaciones" class="marca" aria-label="Ir al inicio">
+    <app-logo [conEslogan]="true" />
+  </a>
+
+  <nav class="menu">
+    <a routerLink="/publicaciones" routerLinkActive="activo"><app-icono nombre="inicio" /> Inicio</a>
+    <a routerLink="/perfil" routerLinkActive="activo"><app-icono nombre="perfil" /> Mi perfil</a>
+    <button type="button" (click)="cerrarSesion()"><app-icono nombre="salir" /> Cerrar sesión</button>
+  </nav>
+
+  <div class="pie">
+    <img src="logo-ojo.svg" alt="" class="ojo" />
+    <p>Una comunidad para cuestionar, investigar y conectar los puntos.</p>
+  </div>
+</aside>

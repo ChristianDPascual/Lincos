@@ -1,0 +1,17 @@
+<a class="volver" routerLink="/publicaciones">← Volver a publicaciones</a>
+
+@if (cargando()) {
+  <app-spinner [tamano]="72" />
+} @else if (error()) {
+  <div class="estado">
+    <p class="alerta-error" role="alert">{{ error() }}</p>
+    <a class="btn btn-secundario" routerLink="/publicaciones">Ir al feed</a>
+  </div>
+} @else if (publicacion(); as p) {
+  <app-publicacion-card [publicacion]="p" [destacada]="true"
+                        (actualizada)="actualizar($event)"
+                        (eliminada)="eliminada()" />
+
+  <h2 class="subtitulo">Comentarios ({{ p.cantidadComentarios }})</h2>
+  <app-comentarios [idPublicacion]="p._id" (cantidadCambiada)="cambiarCantidad($event)" />
+}

@@ -1,0 +1,13 @@
+/* El tamaño lo define quien lo usa, con font-size */
+:host { display: inline-flex; flex-direction: column; align-items: center; gap: .4em; line-height: 1; }
+
+.logo {
+  display: inline-flex; align-items: center;
+  font-family: var(--fuente-titulos); font-weight: 300; letter-spacing: .16em; color: #fff;
+}
+.ojo { height: .74em; width: auto; margin-right: .16em; } /* compensa el letter-spacing */
+
+.eslogan {
+  font-family: var(--fuente-texto); font-weight: 600; font-size: .24em;
+  letter-spacing: .32em; color: var(--turquesa);
+}

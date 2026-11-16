@@ -1,0 +1,21 @@
+.sidebar {
+  height: 100%; display: flex; flex-direction: column; padding: 2rem 1.25rem;
+  border-right: 1px solid var(--borde);
+  background: linear-gradient(180deg, var(--superficie) 0%, var(--superficie) 60%, rgba(8, 99, 117, .28) 100%);
+}
+.marca { display: flex; justify-content: center; margin-bottom: 2.5rem; font-size: 1.9rem; }
+.marca:hover { text-decoration: none; }
+
+.menu { display: flex; flex-direction: column; gap: .35rem; }
+.menu a, .menu button {
+  display: flex; align-items: center; gap: .9rem; padding: .8rem 1rem; border-radius: 12px;
+  background: none; border: none; cursor: pointer; text-align: left; text-decoration: none;
+  color: var(--texto); font: 500 1rem var(--fuente-texto); transition: background .15s;
+}
+.menu a:hover, .menu button:hover { background: var(--superficie-2); text-decoration: none; }
+.menu a.activo { background: rgba(8, 99, 117, .45); }
+.menu a.activo app-icono { color: var(--turquesa); }
+
+.pie { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
+.pie .ojo { width: 72px; opacity: .35; }
+.pie p { margin: 0; font-size: .9rem; line-height: 1.5; color: var(--texto-secundario); }

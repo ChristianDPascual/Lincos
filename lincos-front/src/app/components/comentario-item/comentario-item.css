@@ -1,0 +1,16 @@
+.comentario { display: flex; gap: .75rem; padding: .85rem 0; border-top: 1px solid var(--borde); }
+:host(:first-child) .comentario { border-top: none; padding-top: 0; }
+
+.avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.cuerpo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+
+.cabecera { display: flex; align-items: flex-start; gap: .5rem; }
+.autor { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: .4rem; }
+.nombre { font-size: .92rem; font-weight: 600; }
+.meta { font-size: .8rem; color: var(--texto-secundario); }
+
+.mensaje { margin: 0; line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+
+.edicion { display: flex; flex-direction: column; gap: .5rem; }
+.edicion textarea { resize: vertical; min-height: 60px; }
+.botones { display: flex; justify-content: flex-end; gap: .5rem; }

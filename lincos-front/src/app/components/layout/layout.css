@@ -1,0 +1,16 @@
+/* Celular: barra superior + contenido + navegación inferior */
+.app { min-height: 100dvh; }
+app-sidebar { display: none; }
+app-bottom-nav { display: block; }
+.contenido {
+  max-width: 720px; margin: 0 auto;
+  padding: 1.5rem 16px calc(80px + env(safe-area-inset-bottom)); /* deja lugar a la barra inferior */
+}
+
+/* Escritorio: menú lateral fijo + barra superior + contenido central */
+@media (min-width: 900px) {
+  .app { display: grid; grid-template-columns: 260px minmax(0, 1fr); }
+  app-sidebar { display: block; position: sticky; top: 0; height: 100dvh; }
+  app-bottom-nav { display: none; }
+  .contenido { padding: 2rem 2rem 3rem; }
+}

@@ -1,0 +1,27 @@
+<header class="topbar">
+  <a routerLink="/publicaciones" class="logo-movil" aria-label="Ir al inicio"><app-logo /></a>
+
+  @if (usuario(); as u) {
+    <div class="usuario">
+      <button type="button" class="boton-usuario" (click)="menuAbierto.set(!menuAbierto())"
+              [attr.aria-expanded]="menuAbierto()" aria-label="Menú de usuario">
+        <img class="avatar" [src]="u.imagenPerfil" [alt]="'Foto de ' + u.nombreUsuario" />
+        <span class="nombre">{{ u.nombre }} {{ u.apellido }}</span>
+        <app-icono nombre="flecha-abajo" />
+      </button>
+
+      @if (menuAbierto()) {
+        <!-- Capa invisible: un clic afuera cierra el menú -->
+        <div class="fondo" (click)="menuAbierto.set(false)"></div>
+        <div class="menu" role="menu">
+          <a routerLink="/perfil" role="menuitem" (click)="menuAbierto.set(false)">
+            <app-icono nombre="perfil" /> Mi perfil
+          </a>
+          <button type="button" role="menuitem" (click)="cerrarSesion()">
+            <app-icono nombre="salir" /> Cerrar sesión
+          </button>
+        </div>
+      }
+    </div>
+  }
+</header>

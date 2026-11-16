@@ -1,0 +1,142 @@
+:root {
+  /* Paleta LINCOS */
+  --negro: #000000;
+  --superficie: #0b0f11;
+  --superficie-2: #12181b;
+  --borde: #1e272b;
+  --teal: #086375;
+  --turquesa: #1dd3b0;
+  --verde-lima: #affc41;
+  --verde-claro: #b2ff9e;
+  --texto: #e6ecee;
+  --texto-secundario: #8b989d;
+  --error: #ff6b6b;
+
+  /* Tipografías */
+  --fuente-titulos: 'Space Grotesk', sans-serif;
+  --fuente-texto: 'IBM Plex Sans', sans-serif;
+
+  --radio: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--negro);
+  color: var(--texto);
+  font-family: var(--fuente-texto);
+}
+
+h1, h2, h3 { font-family: var(--fuente-titulos); }
+
+a { color: var(--turquesa); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  height: 44px; padding: 0 1.25rem; border-radius: 999px; border: 1px solid transparent;
+  font: 600 .95rem var(--fuente-texto); cursor: pointer; text-decoration: none;
+  transition: background .15s, border-color .15s, opacity .15s;
+}
+.btn:hover { text-decoration: none; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-primario { background: var(--turquesa); color: #00201a; }
+.btn-primario:hover:not(:disabled) { background: #3ce0c1; }
+.btn-secundario { background: transparent; color: var(--texto); border-color: var(--borde); }
+.btn-secundario:hover:not(:disabled) { border-color: var(--teal); }
+.btn-peligro { background: var(--error); color: #2a0000; }
+.btn-peligro:hover:not(:disabled) { background: #ff8585; }
+.btn-bloque { width: 100%; }
+.btn-chico { height: 36px; padding: 0 .95rem; font-size: .85rem; }
+
+/* ---------- Formularios ---------- */
+.campo { display: flex; flex-direction: column; gap: .4rem; }
+.campo label { font-size: .85rem; font-weight: 500; color: var(--texto-secundario); }
+.campo input, .campo textarea {
+  width: 100%; padding: .75rem .9rem; outline: none; border-radius: 10px;
+  background: var(--superficie-2); border: 1px solid var(--borde);
+  color: var(--texto); font: 400 .95rem var(--fuente-texto); transition: border-color .15s;
+}
+.campo input:focus, .campo textarea:focus { border-color: var(--turquesa); }
+.campo.invalido input, .campo.invalido textarea { border-color: var(--error); }
+
+/* Selects con el estilo de LINCOS (la flecha es un SVG embebido) */
+.campo select {
+  width: 100%; appearance: none; -webkit-appearance: none; cursor: pointer; outline: none;
+  padding: .75rem 2.25rem .75rem .9rem; border-radius: 10px; border: 1px solid var(--borde);
+  color: var(--texto); font: 400 .95rem var(--fuente-texto); transition: border-color .15s;
+  background: var(--superficie-2)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b989d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+    no-repeat right .75rem center / 16px;
+}
+.campo select:focus { border-color: var(--turquesa); }
+.campo select option { background: var(--superficie-2); color: var(--texto); }
+.campo.invalido select { border-color: var(--error); }
+
+/* fieldset con el mismo aspecto que un .campo común */
+fieldset.campo { border: 0; margin: 0; padding: 0; min-width: 0; }
+.campo legend { padding: 0; margin-bottom: .4rem; font-size: .85rem; font-weight: 500; color: var(--texto-secundario); }
+
+.campo-error { margin: 0; font-size: .8rem; color: var(--error); }
+.alerta-error {
+  margin: 0; padding: .75rem .9rem; border-radius: 10px; font-size: .9rem;
+  background: rgba(255, 107, 107, .08); border: 1px solid rgba(255, 107, 107, .35); color: #ffb3b3;
+}
+
+/* ---------- Menú desplegable "⋯" (publicaciones y comentarios) ---------- */
+.menu-contenedor { position: relative; }
+.boton-menu {
+  display: flex; padding: .35rem; border-radius: 50%; background: none; border: none;
+  color: var(--texto-secundario); cursor: pointer;
+}
+.boton-menu:hover { background: var(--superficie-2); color: var(--texto); }
+.menu-fondo { position: fixed; inset: 0; z-index: 5; } /* un clic afuera cierra el menú */
+.menu-desplegable {
+  position: absolute; right: 0; top: calc(100% + .25rem); z-index: 6; min-width: 200px; padding: .35rem;
+  display: flex; flex-direction: column;
+  background: var(--superficie-2); border: 1px solid var(--borde); border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .5);
+}
+.menu-desplegable button {
+  width: 100%; display: flex; align-items: center; gap: .6rem; padding: .6rem .75rem; border-radius: 8px;
+  background: none; border: none; cursor: pointer; text-align: left;
+  color: var(--texto); font: 500 .9rem var(--fuente-texto);
+}
+.menu-desplegable button:hover { background: var(--superficie); }
+.menu-desplegable button.peligro { color: var(--error); }
+
+/* Aviso de contenido editado */
+.editado { margin: 0; font-size: .78rem; font-style: italic; color: var(--texto-secundario); }
+
+/* ---------- Páginas internas ---------- */
+.titulo-pagina { margin: 0 0 1.25rem; font-size: 1.75rem; font-weight: 600; }
+.texto-secundario { color: var(--texto-secundario); }
+
+/* ---------- Pantallas de login y registro ---------- */
+.auth-pantalla { min-height: 100dvh; display: grid; grid-template-columns: 1fr; }
+.auth-marca { display: none; }
+.auth-contenido { display: flex; align-items: center; justify-content: center; padding: 2.5rem 16px; }
+.auth-tarjeta { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 1.1rem; }
+.auth-tarjeta.ancha { max-width: 560px; }
+.auth-tarjeta h1 { margin: 0; font-size: 1.75rem; font-weight: 600; }
+.auth-subtitulo { margin: -.6rem 0 .3rem; color: var(--texto-secundario); }
+.auth-pie { margin: 0; text-align: center; font-size: .9rem; color: var(--texto-secundario); }
+.auth-logo-movil { font-size: 2rem; align-self: center; margin-bottom: .5rem; }
+
+@media (min-width: 900px) {
+  .auth-pantalla { grid-template-columns: 1.1fr 1fr; }
+  .auth-marca {
+    position: sticky; top: 0; height: 100dvh; /* queda fijo mientras el formulario scrollea */
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+    padding: 4rem; border-right: 1px solid var(--borde);
+    background: radial-gradient(120% 70% at 0% 100%, rgba(8, 99, 117, .4), transparent 60%), var(--superficie);
+  }
+  .auth-marca app-logo { font-size: 3.4rem; }
+  .auth-marca p {
+    margin: 0; max-width: 26ch; text-align: center; font-size: 1.15rem; line-height: 1.55;
+    color: var(--texto-secundario);
+  }
+  .auth-tarjeta app-logo.auth-logo-movil { display: none; }
+}

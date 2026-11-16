@@ -1,0 +1,46 @@
+@if (usuario(); as u) {
+  <section class="perfil">
+    <img class="foto" [src]="u.imagenPerfil" [alt]="'Foto de ' + u.nombreUsuario" />
+    <div class="info">
+      <h1>{{ u | nombreCompleto }}</h1>
+      <p class="usuario">
+        &#64;{{ u.nombreUsuario }}
+        @if (u.perfil === 'administrador') { <span class="insignia">Administrador</span> }
+      </p>
+      <p class="descripcion">{{ u.descripcion }}</p>
+
+      <dl class="datos">
+        <div><dt>Correo</dt><dd>{{ u.correo }}</dd></div>
+        <!-- 'UTC': la fecha se guardó a las 00:00 UTC; sin esto, en Argentina se vería un día antes -->
+        <div><dt>Fecha de nacimiento</dt><dd>{{ u.fechaNacimiento | date: "d 'de' MMMM 'de' y" : 'UTC' }}</dd></div>
+        <div><dt>Miembro desde</dt><dd>{{ u.createdAt | date: "MMMM 'de' y" }}</dd></div>
+      </dl>
+    </div>
+  </section>
+}
+
+<h2 class="subtitulo">Mis últimas publicaciones</h2>
+
+@if (cargando()) {
+  <app-spinner [tamano]="64" />
+} @else if (error()) {
+  <div class="estado">
+    <p class="alerta-error" role="alert">{{ error() }}</p>
+    <button type="button" class="btn btn-secundario" (click)="cargarUltimas()">Reintentar</button>
+  </div>
+} @else {
+  <div class="lista">
+    @for (publicacion of publicaciones(); track publicacion._id) {
+      <!-- Cada publicación con sus comentarios (lo pide el sprint 2) -->
+      <div class="bloque">
+        <app-publicacion-card [publicacion]="publicacion"
+                              (actualizada)="reemplazar($event)"
+                              (eliminada)="cargarUltimas()" />
+        <app-comentarios [idPublicacion]="publicacion._id"
+                         (cantidadCambiada)="cambiarCantidad(publicacion._id, $event)" />
+      </div>
+    } @empty {
+      <p class="vacio">Todavía no publicaste nada.</p>
+    }
+  </div>
+}

@@ -1,0 +1,7 @@
+<!-- Con un modal abierto, el resto de la app queda bloqueada (clics y teclado) -->
+<div [attr.inert]="modal.actual() ? '' : null">
+  <router-outlet />
+</div>
+
+<!-- Un único modal para toda la app -->
+<app-modal />

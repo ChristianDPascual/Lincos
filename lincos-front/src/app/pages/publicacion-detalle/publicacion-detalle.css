@@ -1,0 +1,9 @@
+.volver {
+  display: inline-block; margin-bottom: 1rem; font-size: .9rem; font-weight: 500;
+  color: var(--texto-secundario);
+}
+.volver:hover { color: var(--turquesa); text-decoration: none; }
+
+.subtitulo { margin: 1.75rem 0 .85rem; font-size: 1.2rem; font-weight: 600; }
+.estado { display: flex; flex-direction: column; align-items: center; gap: .75rem; margin-top: 2rem; }
+app-spinner { margin-top: 3rem; }

@@ -1,0 +1,36 @@
+.crear { padding: .9rem 1rem; background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio); }
+
+.compacto { display: flex; align-items: center; gap: .75rem; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.disparador {
+  flex: 1; min-width: 0; text-align: left; padding: .8rem 1.1rem; border-radius: 999px; cursor: pointer;
+  background: var(--superficie-2); border: 1px solid var(--borde);
+  color: var(--texto-secundario); font: 400 .95rem var(--fuente-texto); transition: border-color .15s;
+}
+.disparador:hover { border-color: var(--teal); }
+.texto-boton { display: none; }
+
+.formulario { display: flex; flex-direction: column; gap: 1rem; }
+textarea { resize: vertical; min-height: 110px; }
+.contador { align-self: flex-end; margin-top: -.2rem; font-size: .75rem; color: var(--texto-secundario); }
+
+.vista-previa { position: relative; }
+.vista-previa img {
+  display: block; width: 100%; max-height: 320px; object-fit: cover;
+  border-radius: 12px; border: 1px solid var(--borde);
+}
+.quitar {
+  position: absolute; top: .5rem; right: .5rem; width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: none; background: rgba(0, 0, 0, .7); color: #fff; cursor: pointer;
+}
+
+.pie { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; }
+.adjuntar {
+  display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .6rem; border-radius: 8px; cursor: pointer;
+  color: var(--texto-secundario); font: 500 .9rem var(--fuente-texto);
+}
+.adjuntar:hover { color: var(--turquesa); background: var(--superficie-2); }
+.botones { display: flex; gap: .5rem; margin-left: auto; }
+
+@media (min-width: 600px) { .texto-boton { display: inline; } }

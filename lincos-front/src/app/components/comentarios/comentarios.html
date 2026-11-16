@@ -1,0 +1,44 @@
+<section class="comentarios" aria-label="Comentarios">
+  <form class="nuevo" [formGroup]="form" (ngSubmit)="comentar()" novalidate
+        [attr.inert]="enviando() ? '' : null">
+    <img class="avatar" [src]="usuario()?.imagenPerfil" alt="" />
+    <div class="campo" [class.invalido]="mensajeInvalido()">
+      <textarea formControlName="mensaje" rows="2" maxlength="500"
+                placeholder="Sumá tu comentario o tu teoría…" aria-label="Escribir un comentario"></textarea>
+      @if (mensajeInvalido()) { <p class="campo-error">Escribí algo antes de comentar.</p> }
+      @if (errorEnvio()) { <p class="campo-error">{{ errorEnvio() }}</p> }
+    </div>
+    <button type="submit" class="btn btn-primario btn-chico" [disabled]="enviando()">
+      {{ enviando() ? 'Enviando…' : 'Comentar' }}
+    </button>
+  </form>
+
+  <div class="lista">
+    @for (comentario of comentarios(); track comentario._id) {
+      <app-comentario-item [comentario]="comentario"
+                           (actualizado)="reemplazar($event)"
+                           (eliminado)="quitar($event)" />
+    } @empty {
+      @if (!cargando() && !error()) {
+        <p class="vacio">Todavía no hay comentarios. ¡Sé el primero en opinar!</p>
+      }
+    }
+  </div>
+
+  @if (cargando()) {
+    <app-spinner [tamano]="48" />
+  }
+
+  @if (error()) {
+    <div class="estado">
+      <p class="alerta-error" role="alert">{{ error() }}</p>
+      <button type="button" class="btn btn-secundario btn-chico" (click)="cargarMas()">Reintentar</button>
+    </div>
+  }
+
+  @if (hayMas() && !cargando()) {
+    <button type="button" class="ver-mas" (click)="cargarMas()">
+      Ver más comentarios ({{ restantes() }})
+    </button>
+  }
+</section>

@@ -1,0 +1,21 @@
+@if (opciones(); as o) {
+  <div class="fondo" (click)="o.textoCancelar ? cancelar() : null">
+    <div class="caja" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
+         (click)="$event.stopPropagation()">
+      <h2 id="modal-titulo">{{ o.titulo }}</h2>
+      <p>{{ o.mensaje }}</p>
+
+      <div class="acciones">
+        @if (o.textoCancelar) {
+          <button type="button" class="btn btn-secundario" (click)="cancelar()">{{ o.textoCancelar }}</button>
+        }
+        <button type="button" class="btn"
+                [class.btn-primario]="o.tipo !== 'peligro'"
+                [class.btn-peligro]="o.tipo === 'peligro'"
+                (click)="aceptar()">
+          {{ o.textoAceptar }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
