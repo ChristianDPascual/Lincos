@@ -1,6 +1,7 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { filter, switchMap } from 'rxjs';
 import { Comentario } from '../../models/comentario';
 import { ComentariosService } from '../../services/comentarios';
@@ -10,9 +11,10 @@ import { Icono } from '../icono/icono';
 import { TiempoRelativoPipe } from '../../pipes/tiempo-relativo-pipe';
 import { NombreCompletoPipe } from '../../pipes/nombre-completo-pipe';
 import { obtenerMensajeError } from '../../core/mensaje-error';
+import { ImagenFallback } from '../../directives/imagen-fallback';
 
 @Component({
-  imports: [DatePipe, ReactiveFormsModule, Icono, TiempoRelativoPipe, NombreCompletoPipe],
+  imports: [DatePipe, ReactiveFormsModule, RouterLink, Icono, TiempoRelativoPipe, NombreCompletoPipe, ImagenFallback],
   selector: 'app-comentario-item',
   templateUrl: './comentario-item.html',
   styleUrl: './comentario-item.css',

@@ -1,7 +1,7 @@
 <section class="comentarios" aria-label="Comentarios">
   <form class="nuevo" [formGroup]="form" (ngSubmit)="comentar()" novalidate
         [attr.inert]="enviando() ? '' : null">
-    <img class="avatar" [src]="usuario()?.imagenPerfil" alt="" />
+    <img class="avatar" [src]="usuario()?.imagenPerfil" alt="" appImagenFallback />
     <div class="campo" [class.invalido]="mensajeInvalido()">
       <textarea formControlName="mensaje" rows="2" maxlength="500"
                 placeholder="Sumá tu comentario o tu teoría…" aria-label="Escribir un comentario"></textarea>

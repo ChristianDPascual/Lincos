@@ -1,0 +1,17 @@
+:host { display: block; }
+
+/* Día, mes y año: anchos mínimos para que el número nunca se corte */
+.selects {
+  display: grid;
+  grid-template-columns: minmax(4.75rem, 1fr) minmax(5.25rem, 1.1fr) minmax(6rem, 1.2fr);
+  gap: .5rem;
+}
+
+/* Menos espacio interno que los selects del registro: la flecha se acerca al borde */
+.selects select {
+  min-width: 0;
+  padding-left: .75rem;
+  padding-right: 1.9rem;
+  background-position: right .6rem center;
+  text-overflow: clip;
+}

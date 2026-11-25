@@ -6,13 +6,14 @@ import { Auth } from '../../services/auth';
 import { ComentarioItem } from '../comentario-item/comentario-item';
 import { Spinner } from '../spinner/spinner';
 import { obtenerMensajeError } from '../../core/mensaje-error';
+import { ImagenFallback } from '../../directives/imagen-fallback';
 
 const POR_PAGINA = 3;
 
 // Sección de comentarios de una publicación: formulario, lista y "Ver más".
 // Se reutiliza en la página de detalle y en Mi perfil.
 @Component({
-  imports: [ReactiveFormsModule, ComentarioItem, Spinner],
+  imports: [ReactiveFormsModule, ComentarioItem, Spinner, ImagenFallback],
   selector: 'app-comentarios',
   templateUrl: './comentarios.html',
   styleUrl: './comentarios.css',

@@ -6,9 +6,10 @@ import { Auth } from '../../services/auth';
 import { Icono } from '../icono/icono';
 import { imagenValidator } from '../../validators/usuario.validators';
 import { obtenerMensajeError } from '../../core/mensaje-error';
+import { ImagenFallback } from '../../directives/imagen-fallback';
 
 @Component({
-  imports: [ReactiveFormsModule, Icono],
+  imports: [ReactiveFormsModule, Icono, ImagenFallback],
   selector: 'app-crear-publicacion',
   templateUrl: './crear-publicacion.html',
   styleUrl: './crear-publicacion.css',

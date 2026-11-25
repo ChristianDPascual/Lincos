@@ -1,12 +1,16 @@
 @let c = comentario();
 
 <article class="comentario">
-  <img class="avatar" [src]="c.autor.imagenPerfil" [alt]="'Foto de ' + c.autor.nombreUsuario" />
+  <!-- Nombre y foto llevan al perfil del autor (sprint 5) -->
+  <a class="avatar-enlace" [routerLink]="['/perfil', c.autor.nombreUsuario]"
+     [attr.aria-label]="'Ver el perfil de ' + c.autor.nombreUsuario">
+    <img class="avatar" [src]="c.autor.imagenPerfil" [alt]="'Foto de ' + c.autor.nombreUsuario" appImagenFallback />
+  </a>
 
   <div class="cuerpo">
     <header class="cabecera">
       <div class="autor">
-        <span class="nombre">{{ c.autor | nombreCompleto }}</span>
+        <a class="nombre" [routerLink]="['/perfil', c.autor.nombreUsuario]">{{ c.autor | nombreCompleto }}</a>
         <span class="meta">
           &#64;{{ c.autor.nombreUsuario }} ·
           <time [attr.datetime]="c.createdAt" [title]="c.createdAt | date: &quot;EEEE d 'de' MMMM 'de' y, HH:mm&quot;">

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <defs>
+    <radialGradient id="brillo" cx="50%" cy="45%" r="55%">
+      <stop offset="0" stop-color="#086375" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grilla" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#1dd3b0" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+    <pattern id="barrido" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1" fill="#000" fill-opacity=".35"/>
+    </pattern>
+  </defs>
+
+  <!-- Fondo -->
+  <rect width="640" height="360" fill="#000"/>
+  <rect width="640" height="360" fill="url(#grilla)"/>
+  <rect width="640" height="360" fill="url(#brillo)"/>
+
+  <!-- Esquinas de visor -->
+  <g fill="none" stroke="#1dd3b0" stroke-width="3" stroke-linecap="round">
+    <path d="M28 64V28h36"/><path d="M576 28h36v36"/>
+    <path d="M612 296v36h-36"/><path d="M64 332H28v-36"/>
+  </g>
+  <text x="40" y="54" fill="#1dd3b0" font-family="'Space Grotesk', 'Segoe UI', Arial, sans-serif"
+        font-size="13" font-weight="600" letter-spacing="3">● REC</text>
+  <text x="600" y="320" text-anchor="end" fill="#1dd3b0" fill-opacity=".6"
+        font-family="'IBM Plex Mono', Consolas, monospace" font-size="12" letter-spacing="2">EXP-0000 · ??:??:??</text>
+
+  <!-- Ojo -->
+  <g transform="translate(320 150)">
+    <path d="M-110 0C-75-52-38-70 0-70S75-52 110 0C75 52 38 70 0 70S-75 52-110 0Z"
+          fill="#0b0f11" stroke="#1dd3b0" stroke-width="4"/>
+    <circle r="40" fill="#086375"/>
+    <circle r="40" fill="none" stroke="#1dd3b0" stroke-width="2" stroke-dasharray="4 6"/>
+    <circle r="16" fill="#affc41"/>
+    <circle cx="-7" cy="-8" r="5" fill="#fff" fill-opacity=".85"/>
+    <!-- Franja de "censura" con interferencia -->
+    <rect x="-130" y="-6" width="260" height="12" fill="#000"/>
+    <rect x="-96" y="-2" width="54" height="4" fill="#1dd3b0" fill-opacity=".7"/>
+    <rect x="18" y="-2" width="30" height="4" fill="#affc41" fill-opacity=".7"/>
+    <rect x="62" y="-2" width="14" height="4" fill="#b2ff9e" fill-opacity=".6"/>
+  </g>
+
+  <!-- Textos -->
+  <text x="320" y="262" text-anchor="middle" fill="#e8f1f2"
+        font-family="'Space Grotesk', 'Segoe UI', Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="6">SEÑAL PERDIDA</text>
+  <text x="320" y="290" text-anchor="middle" fill="#8b989d"
+        font-family="'IBM Plex Sans', 'Segoe UI', Arial, sans-serif" font-size="15">La imagen fue ocultada… o nunca existió</text>
+
+  <!-- Líneas de barrido (efecto pantalla) -->
+  <rect width="640" height="360" fill="url(#barrido)"/>
+</svg>

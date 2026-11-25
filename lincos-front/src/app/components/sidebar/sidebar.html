@@ -5,7 +5,19 @@
 
   <nav class="menu">
     <a routerLink="/publicaciones" routerLinkActive="activo"><app-icono nombre="inicio" /> Inicio</a>
-    <a routerLink="/perfil" routerLinkActive="activo"><app-icono nombre="perfil" /> Mi perfil</a>
+    <!-- exact: "Mi perfil" no se resalta al ver el perfil de otro usuario (/perfil/otro) -->
+    <a routerLink="/perfil" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">
+      <app-icono nombre="perfil" /> Mi perfil
+    </a>
+
+    <!-- Solo los ven los administradores (directiva estructural propia) -->
+    <a *appSoloAdmin routerLink="/admin/usuarios" routerLinkActive="activo">
+      <app-icono nombre="usuarios" /> Usuarios
+    </a>
+    <a *appSoloAdmin routerLink="/admin/estadisticas" routerLinkActive="activo">
+      <app-icono nombre="estadisticas" /> Estadísticas
+    </a>
+
     <button type="button" (click)="cerrarSesion()"><app-icono nombre="salir" /> Cerrar sesión</button>
   </nav>
 

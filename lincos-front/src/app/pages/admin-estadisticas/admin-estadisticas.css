@@ -1,0 +1,49 @@
+.encabezado { margin-bottom: 1.25rem; }
+.encabezado .titulo-pagina { margin: 0; }
+.resumen { margin: .3rem 0 0; font-size: .9rem; color: var(--texto-secundario); }
+
+/* ---------- Período ---------- */
+.periodo {
+  display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; padding: 1.1rem 1.25rem;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio);
+}
+.atajos { display: flex; flex-wrap: wrap; gap: .5rem; }
+.atajo {
+  padding: .4rem .85rem; border-radius: 999px; cursor: pointer;
+  background: none; border: 1px solid var(--borde); color: var(--texto-secundario);
+  font: 500 .82rem var(--fuente-texto); transition: border-color .15s, color .15s;
+}
+.atajo:hover { border-color: var(--turquesa); color: var(--turquesa); }
+
+/* Celular: Desde, Hasta y Aplicar uno debajo del otro */
+.rango { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.rango app-selector-fecha { min-width: 0; }
+.aplicar { width: 100%; }
+
+/* ---------- Indicadores ---------- */
+.indicadores { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: .6rem; margin-bottom: 1.5rem; }
+.indicador {
+  display: flex; flex-direction: column; gap: .15rem; padding: .85rem 1rem;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: 12px;
+  font-size: .8rem; color: var(--texto-secundario);
+}
+.valor { font: 600 1.6rem var(--fuente-titulos); color: var(--texto); }
+
+/* ---------- Gráficos ---------- */
+.graficos { display: flex; flex-direction: column; gap: 1rem; }
+.tarjeta {
+  padding: 1.1rem 1.25rem;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio);
+}
+.tarjeta h2 { margin: 0 0 .25rem; font-size: 1.05rem; font-weight: 600; }
+.aclaracion { margin: 0 0 .75rem; font-size: .8rem; color: var(--texto-secundario); }
+.tarjeta app-grafico { margin-top: .75rem; }
+.sin-datos { margin: 1.5rem 0 .5rem; text-align: center; font-size: .9rem; color: var(--texto-secundario); }
+
+.estado { display: flex; flex-direction: column; align-items: center; gap: .75rem; }
+
+/* Pantallas medianas y grandes: Desde y Hasta lado a lado, Aplicar abajo a la derecha */
+@media (min-width: 640px) {
+  .rango { grid-template-columns: 1fr 1fr; }
+  .aplicar { grid-column: 1 / -1; justify-self: end; width: auto; }
+}

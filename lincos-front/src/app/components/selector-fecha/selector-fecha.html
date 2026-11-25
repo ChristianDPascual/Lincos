@@ -1,0 +1,20 @@
+<fieldset class="campo">
+  <legend>{{ etiqueta() }}</legend>
+  <div class="selects">
+    <select [attr.aria-label]="etiqueta() + ': día'" (change)="cambiar('dia', $event)">
+      @for (d of dias(); track d) {
+        <option [value]="d" [selected]="d === dia()">{{ d }}</option>
+      }
+    </select>
+    <select [attr.aria-label]="etiqueta() + ': mes'" (change)="cambiar('mes', $event)">
+      @for (m of meses; track m; let i = $index) {
+        <option [value]="i + 1" [selected]="i + 1 === mes()">{{ m }}</option>
+      }
+    </select>
+    <select [attr.aria-label]="etiqueta() + ': año'" (change)="cambiar('anio', $event)">
+      @for (a of anios(); track a) {
+        <option [value]="a" [selected]="a === anio()">{{ a }}</option>
+      }
+    </select>
+  </div>
+</fieldset>

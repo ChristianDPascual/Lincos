@@ -1,3 +1,4 @@
+// Producción: lo usa "ng build"
 export const environment = {
-  apiUrl: 'http://localhost:3000', // al desplegar lo cambiamos por la URL de Render
+  apiUrl: 'https://https-lincos-api-onrender-com.onrender.com', // API publicada en Render, sin "/" al final
 };

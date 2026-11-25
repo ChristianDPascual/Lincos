@@ -14,6 +14,21 @@ export interface Usuario {
   createdAt: string;
 }
 
+// Lo que se muestra en una página de perfil.
+// En el perfil de otro usuario no llegan el correo ni la fecha de nacimiento.
+export interface PerfilUsuario {
+  _id: string;
+  nombre: string;
+  apellido: string;
+  nombreUsuario: string;
+  descripcion: string;
+  imagenPerfil: string;
+  perfil: Perfil;
+  createdAt: string;
+  correo?: string;
+  fechaNacimiento?: string;
+}
+
 export interface DatosLogin {
   usuario: string; // correo o nombre de usuario
   password: string;

@@ -11,9 +11,11 @@ import { Icono } from '../icono/icono';
 import { TiempoRelativoPipe } from '../../pipes/tiempo-relativo-pipe';
 import { NombreCompletoPipe } from '../../pipes/nombre-completo-pipe';
 import { obtenerMensajeError } from '../../core/mensaje-error';
+import { ImagenFallback } from '../../directives/imagen-fallback';
+import { NumeroCompactoPipe } from '../../pipes/numero-compacto-pipe';
 
 @Component({
-  imports: [RouterLink, DatePipe, ReactiveFormsModule, Icono, TiempoRelativoPipe, NombreCompletoPipe],
+  imports: [RouterLink, DatePipe, ReactiveFormsModule, Icono, TiempoRelativoPipe, NombreCompletoPipe, ImagenFallback, NumeroCompactoPipe],
   selector: 'app-publicacion-card',
   templateUrl: './publicacion-card.html',
   styleUrl: './publicacion-card.css',

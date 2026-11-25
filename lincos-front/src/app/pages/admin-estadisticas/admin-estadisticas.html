@@ -1,1 +1,111 @@
-<p>admin-estadisticas works!</p>
+<header class="encabezado">
+  <h1 class="titulo-pagina">Estadísticas</h1>
+  <p class="resumen">
+    Del {{ periodoAplicado().desde | date: "d 'de' MMMM 'de' y" : 'UTC' }}
+    al {{ periodoAplicado().hasta | date: "d 'de' MMMM 'de' y" : 'UTC' }}
+  </p>
+</header>
+
+<!-- Elección del período -->
+<section class="periodo" aria-label="Período">
+  <div class="atajos">
+    @for (atajo of atajos; track atajo.texto) {
+      <button type="button" class="atajo" (click)="usarAtajo(atajo)">{{ atajo.texto }}</button>
+    }
+  </div>
+
+  <div class="rango">
+    <app-selector-fecha etiqueta="Desde" [(valor)]="desde" />
+    <app-selector-fecha etiqueta="Hasta" [(valor)]="hasta" />
+    <button type="button" class="btn btn-primario aplicar"
+            [disabled]="!!errorPeriodo() || cargando() || !hayCambiosSinAplicar()" (click)="aplicar()">
+      Aplicar
+    </button>
+  </div>
+
+  @if (errorPeriodo()) {
+    <p class="campo-error">{{ errorPeriodo() }}</p>
+  }
+</section>
+
+@if (cargando()) {
+  <app-spinner [tamano]="72" mensaje="Calculando estadísticas..." />
+} @else if (error()) {
+  <div class="estado">
+    <p class="alerta-error" role="alert">{{ error() }}</p>
+    <button type="button" class="btn btn-secundario" (click)="aplicar()">Reintentar</button>
+  </div>
+} @else if (datos(); as d) {
+  <!-- Totales del período -->
+  <div class="indicadores">
+    <div class="indicador"><span class="valor">{{ totalPublicaciones() | numeroCompacto }}</span><span>Publicaciones</span></div>
+    <div class="indicador"><span class="valor">{{ totalComentarios() | numeroCompacto }}</span><span>Comentarios</span></div>
+    <div class="indicador"><span class="valor">{{ totalMeGusta() | numeroCompacto }}</span><span>"Lo creo"</span></div>
+    <div class="indicador"><span class="valor">{{ totalIngresos() | numeroCompacto }}</span><span>Ingresos</span></div>
+    <div class="indicador"><span class="valor">{{ totalVisitas() | numeroCompacto }}</span><span>Visitas a perfiles</span></div>
+  </div>
+
+  <div class="graficos">
+    <article class="tarjeta">
+      <h2>Publicaciones por usuario</h2>
+      @if (sinDatos(d.publicacionesPorUsuario)) {
+        <p class="sin-datos">No hay publicaciones en este período.</p>
+      } @else {
+        <app-grafico tipo="bar" serie="Publicaciones"
+                     [etiquetas]="usuarios(d.publicacionesPorUsuario)" [valores]="cantidades(d.publicacionesPorUsuario)" />
+      }
+    </article>
+
+    <article class="tarjeta">
+      <h2>Comentarios en el período</h2>
+      @if (sinDatos(d.comentariosPorDia)) {
+        <p class="sin-datos">No hay comentarios en este período.</p>
+      } @else {
+        <app-grafico tipo="line" serie="Comentarios"
+                     [etiquetas]="dias(d.comentariosPorDia)" [valores]="cantidades(d.comentariosPorDia)" />
+      }
+    </article>
+
+    <article class="tarjeta">
+      <h2>Comentarios por publicación</h2>
+      <p class="aclaracion">Las 10 publicaciones con más comentarios</p>
+      @if (sinDatos(d.comentariosPorPublicacion)) {
+        <p class="sin-datos">No hay comentarios en este período.</p>
+      } @else {
+        <app-grafico tipo="pie" serie="Comentarios"
+                     [etiquetas]="titulos(d.comentariosPorPublicacion)" [valores]="cantidades(d.comentariosPorPublicacion)" />
+      }
+    </article>
+
+    <article class="tarjeta">
+      <h2>Ingresos por usuario</h2>
+      @if (sinDatos(d.ingresosPorUsuario)) {
+        <p class="sin-datos">No hay ingresos en este período.</p>
+      } @else {
+        <app-grafico tipo="bar" [horizontal]="true" serie="Ingresos"
+                     [etiquetas]="usuarios(d.ingresosPorUsuario)" [valores]="cantidades(d.ingresosPorUsuario)" />
+      }
+    </article>
+
+    <article class="tarjeta">
+      <h2>Visitas a perfiles</h2>
+      <p class="aclaracion">No se cuentan las visitas al propio perfil</p>
+      @if (sinDatos(d.visitasPorPerfil)) {
+        <p class="sin-datos">No hay visitas en este período.</p>
+      } @else {
+        <app-grafico tipo="doughnut" serie="Visitas"
+                     [etiquetas]="usuarios(d.visitasPorPerfil)" [valores]="cantidades(d.visitasPorPerfil)" />
+      }
+    </article>
+
+    <article class="tarjeta">
+      <h2>"Lo creo" por día</h2>
+      @if (sinDatos(d.meGustaPorDia)) {
+        <p class="sin-datos">No hay "Lo creo" en este período.</p>
+      } @else {
+        <app-grafico tipo="line" serie='"Lo creo"'
+                     [etiquetas]="dias(d.meGustaPorDia)" [valores]="cantidades(d.meGustaPorDia)" />
+      }
+    </article>
+  </div>
+}

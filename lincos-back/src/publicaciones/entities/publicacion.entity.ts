@@ -3,7 +3,9 @@ import mongoose, { HydratedDocument } from 'mongoose';
 
 export type PublicacionDocument = HydratedDocument<Publicacion>;
 
-@Schema({ timestamps: true, versionKey: false })
+// collection: se fija el nombre a mano. Si no, Mongoose arma el plural con reglas
+// del inglés y la colección queda "publicacions".
+@Schema({ collection: 'publicaciones', timestamps: true, versionKey: false })
 export class Publicacion {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: true })
   autor: mongoose.Types.ObjectId;

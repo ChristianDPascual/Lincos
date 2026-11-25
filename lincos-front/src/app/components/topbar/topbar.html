@@ -5,7 +5,7 @@
     <div class="usuario">
       <button type="button" class="boton-usuario" (click)="menuAbierto.set(!menuAbierto())"
               [attr.aria-expanded]="menuAbierto()" aria-label="Menú de usuario">
-        <img class="avatar" [src]="u.imagenPerfil" [alt]="'Foto de ' + u.nombreUsuario" />
+        <img class="avatar" [src]="u.imagenPerfil" [alt]="'Foto de ' + u.nombreUsuario" appImagenFallback />
         <span class="nombre">{{ u.nombre }} {{ u.apellido }}</span>
         <app-icono nombre="flecha-abajo" />
       </button>

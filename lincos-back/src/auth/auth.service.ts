@@ -1,39 +1,30 @@
-import {
-  BadRequestException, ForbiddenException, Injectable, UnauthorizedException,
-} from '@nestjs/common';
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { PasswordHasher } from '@nestjs/authentication';
 import { UsuariosService } from '../usuarios/usuarios.service';
-import { FileService } from '../file/file.service';
 import { CreateUsuarioDto } from '../usuarios/dto/create-usuario.dto';
 import { UsuarioDocument } from '../usuarios/entities/usuario.entity';
 import { LoginDto } from './dto/login.dto';
 import { PayloadToken } from './payload-token';
+import { Ingreso } from './entities/ingreso.entity';
 
-const EDAD_MINIMA = 14;
 const MENSAJE_DESHABILITADO = 'Tu cuenta está deshabilitada. Contactá a un administrador.';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usuariosService: UsuariosService,
-    private readonly fileService: FileService,
     private readonly passwordHasher: PasswordHasher,
     private readonly jwtService: JwtService,
+    @InjectModel(Ingreso.name) private readonly ingresoModel: Model<Ingreso>,
   ) {}
 
+  // El alta (edad, duplicados, foto, contraseña) la resuelve UsuariosService;
+  // acá solo se agrega el token para que el usuario quede logueado
   async registrar(dto: CreateUsuarioDto, imagen: Express.Multer.File) {
-    // La regla de edad se valida también acá: el front se puede saltear
-    const fechaNacimiento = new Date(dto.fechaNacimiento);
-    if (this.calcularEdad(fechaNacimiento) < EDAD_MINIMA) {
-      throw new BadRequestException(`Tenés que tener al menos ${EDAD_MINIMA} años para registrarte`);
-    }
-
-    await this.usuariosService.verificarDisponibilidad(dto.correo, dto.nombreUsuario);
-    const imagenPerfil = await this.fileService.subirImagen(imagen, 'usuarios');
-    const password = await this.passwordHasher.hash(dto.password);
-
-    const usuario = await this.usuariosService.crear({ ...dto, fechaNacimiento, password, imagenPerfil });
+    const usuario = await this.usuariosService.registrar(dto, imagen);
     return this.armarRespuesta(usuario);
   }
 
@@ -44,9 +35,14 @@ export class AuthService {
     if (!usuario || !(await this.passwordHasher.verify(dto.password, usuario.password))) {
       throw new UnauthorizedException('Las credenciales ingresadas son incorrectas');
     }
+    // Usuario deshabilitado por un admin: se le avisa al intentar ingresar (lo pide el TP)
     if (!usuario.habilitado) {
       throw new ForbiddenException(MENSAJE_DESHABILITADO);
     }
+
+    // Sprint 5: se registra el ingreso para la estadística "ingresos por usuario"
+    await this.ingresoModel.create({ usuario: usuario._id });
+
     return this.armarRespuesta(usuario);
   }
 
@@ -62,7 +58,7 @@ export class AuthService {
     return usuario;
   }
 
-    // POST /auth/refrescar: mismas validaciones que autorizar y un token nuevo de 15 min
+  // POST /auth/refrescar: mismas validaciones que autorizar y un token nuevo de 15 min
   async refrescar(idUsuario: string) {
     const usuario = await this.autorizar(idUsuario); // si fue deshabilitado, no se renueva
     return { token: await this.generarToken(usuario) };
@@ -80,15 +76,5 @@ export class AuthService {
       perfil: usuario.perfil,
     };
     return this.jwtService.signAsync(payload);
-  }
-
-  private calcularEdad(nacimiento: Date): number {
-    const hoy = new Date();
-    let edad = hoy.getUTCFullYear() - nacimiento.getUTCFullYear();
-    const diferenciaMeses = hoy.getUTCMonth() - nacimiento.getUTCMonth();
-    if (diferenciaMeses < 0 || (diferenciaMeses === 0 && hoy.getUTCDate() < nacimiento.getUTCDate())) {
-      edad--; // todavía no cumplió años este año
-    }
-    return edad;
   }
 }

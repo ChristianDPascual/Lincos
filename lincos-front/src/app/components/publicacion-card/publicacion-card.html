@@ -2,9 +2,13 @@
 
 <article class="tarjeta" [class.destacada]="destacada()">
   <header class="cabecera">
-    <img class="avatar" [src]="p.autor.imagenPerfil" [alt]="'Foto de ' + p.autor.nombreUsuario" />
+    <!-- Nombre y foto llevan al perfil del autor (sprint 5) -->
+    <a class="avatar-enlace" [routerLink]="['/perfil', p.autor.nombreUsuario]"
+       [attr.aria-label]="'Ver el perfil de ' + p.autor.nombreUsuario">
+      <img class="avatar" [src]="p.autor.imagenPerfil" [alt]="'Foto de ' + p.autor.nombreUsuario" appImagenFallback />
+    </a>
     <div class="datos-autor">
-      <span class="nombre">{{ p.autor | nombreCompleto }}</span>
+      <a class="nombre" [routerLink]="['/perfil', p.autor.nombreUsuario]">{{ p.autor | nombreCompleto }}</a>
       <!-- &#64; es la @: escrita directo, Angular la toma como inicio de un bloque -->
       <span class="meta">
         &#64;{{ p.autor.nombreUsuario }} ·
@@ -64,7 +68,7 @@
   }
 
   @if (p.imagen) {
-    <img class="imagen" [src]="p.imagen" [alt]="p.titulo" loading="lazy" />
+    <img class="imagen" [src]="p.imagen" [alt]="p.titulo" loading="lazy" appImagenFallback="publicacion" />
   }
 
   @if (p.editada) {
@@ -79,16 +83,16 @@
             [attr.aria-label]="p.meGusta ? 'Quitar Lo creo' : 'Lo creo'"
             (click)="alternarMeGusta()">
       <app-icono [nombre]="p.meGusta ? 'ovni-lleno' : 'ovni'" />
-      {{ p.cantidadMeGusta }}
+      {{ p.cantidadMeGusta | numeroCompacto }}
       <span class="etiqueta">Lo creo</span>
     </button>
 
     @if (destacada()) {
       <!-- En el detalle ya se ven los comentarios: el contador no es un link -->
-      <span class="accion informativa"><app-icono nombre="comentario" /> {{ p.cantidadComentarios }}</span>
+      <span class="accion informativa"><app-icono nombre="comentario" /> {{ p.cantidadComentarios | numeroCompacto }}</span>
     } @else {
       <a class="accion" [routerLink]="['/publicaciones', p._id]" aria-label="Ver comentarios">
-        <app-icono nombre="comentario" /> {{ p.cantidadComentarios }}
+        <app-icono nombre="comentario" /> {{ p.cantidadComentarios | numeroCompacto }}
       </a>
     }
   </footer>

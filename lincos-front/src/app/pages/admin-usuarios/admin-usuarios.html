@@ -1,1 +1,80 @@
-<p>admin-usuarios works!</p>
+<header class="encabezado">
+  <div>
+    <h1 class="titulo-pagina">Usuarios</h1>
+    @if (!cargando() && !error()) {
+      <p class="resumen">
+        {{ usuarios().length }} usuarios · {{ cantidadAdmins() }} administradores · {{ cantidadDeshabilitados() }} deshabilitados
+      </p>
+    }
+  </div>
+  @if (!mostrandoFormulario()) {
+    <button type="button" class="btn btn-primario" (click)="abrirFormulario()">
+      <app-icono nombre="agregar-usuario" /> Nuevo usuario
+    </button>
+  }
+</header>
+
+@if (mostrandoFormulario()) {
+  <section class="panel">
+    <div class="panel-cabecera">
+      <h2>Nuevo usuario</h2>
+      <button type="button" class="cerrar" aria-label="Cerrar formulario" (click)="cerrarFormulario()">
+        <app-icono nombre="cerrar" />
+      </button>
+    </div>
+    <!-- El mismo formulario del registro, con los radios usuario / administrador -->
+    <app-form-usuario [mostrarPerfil]="true" textoBoton="Crear usuario"
+                      [cargando]="creando()" [error]="errorCreacion()"
+                      (enviar)="crear($event)" />
+  </section>
+}
+
+@if (cargando()) {
+  <app-spinner [tamano]="64" />
+} @else if (error()) {
+  <div class="estado">
+    <p class="alerta-error" role="alert">{{ error() }}</p>
+    <button type="button" class="btn btn-secundario" (click)="cargar()">Reintentar</button>
+  </div>
+} @else {
+  <ul class="lista">
+    @for (u of usuarios(); track u._id) {
+      <li class="fila" [class.deshabilitado]="!u.habilitado">
+        <img class="avatar" [src]="u.imagenPerfil" [alt]="'Foto de ' + u.nombreUsuario" appImagenFallback />
+
+        <div class="datos">
+          <a class="nombre" [routerLink]="['/perfil', u.nombreUsuario]">{{ u | nombreCompleto }}</a>
+          <span class="meta">&#64;{{ u.nombreUsuario }} · {{ u.correo }}</span>
+          <span class="meta">Alta: {{ u.createdAt | date: 'd MMM y' }}</span>
+        </div>
+
+        <div class="insignias">
+          <span class="insignia" [class.admin]="u.perfil === 'administrador'">
+            {{ u.perfil === 'administrador' ? 'Administrador' : 'Usuario' }}
+          </span>
+          <span class="estado-usuario" [class.inactivo]="!u.habilitado">
+            {{ u.habilitado ? 'Habilitado' : 'Deshabilitado' }}
+          </span>
+        </div>
+
+        <div class="accion">
+          @if (u._id === idPropio()) {
+            <span class="vos">Tu cuenta</span>
+          } @else {
+            <button type="button" class="btn btn-chico"
+                    [class.btn-secundario]="u.habilitado" [class.btn-primario]="!u.habilitado"
+                    [disabled]="procesando() === u._id" (click)="cambiarEstado(u)">
+              {{ u.habilitado ? 'Deshabilitar' : 'Habilitar' }}
+            </button>
+          }
+        </div>
+      </li>
+    } @empty {
+      <li class="vacio">No hay usuarios registrados.</li>
+    }
+  </ul>
+}
+
+@if (creando()) {
+  <app-spinner [pantallaCompleta]="true" [tamano]="120" mensaje="Creando usuario..." />
+}

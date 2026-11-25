@@ -1,7 +1,7 @@
 <section class="crear">
   @if (!abierto()) {
     <div class="compacto">
-      <img class="avatar" [src]="usuario()?.imagenPerfil" alt="" />
+      <img class="avatar" [src]="usuario()?.imagenPerfil" alt="" appImagenFallback />
       <button type="button" class="disparador" (click)="abrir()">¿Qué estás investigando?</button>
       <button type="button" class="btn btn-primario" (click)="abrir()" aria-label="Crear publicación">
         <app-icono nombre="lapiz" /> <span class="texto-boton">Crear publicación</span>

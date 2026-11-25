@@ -3,7 +3,8 @@ import { Component, input } from '@angular/core';
 export type NombreIcono =
   | 'inicio' | 'perfil' | 'salir' | 'flecha-abajo'
   | 'ovni' | 'ovni-lleno' | 'comentario' | 'mas'
-  | 'basura' | 'lapiz' | 'imagen' | 'cerrar';
+  | 'basura' | 'lapiz' | 'imagen' | 'cerrar'
+  | 'usuarios' | 'agregar-usuario' | 'estadisticas';
 
 @Component({
   imports: [],

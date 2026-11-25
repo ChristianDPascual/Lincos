@@ -1,0 +1,3 @@
+:host { display: block; }
+/* Chart.js ocupa el alto del contenedor (maintainAspectRatio: false) */
+.contenedor { position: relative; height: 280px; }

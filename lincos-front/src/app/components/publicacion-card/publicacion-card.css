@@ -3,9 +3,12 @@
   background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio);
 }
 .cabecera { display: flex; align-items: center; gap: .75rem; }
-.avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.avatar-enlace { display: flex; flex-shrink: 0; border-radius: 50%; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; transition: opacity .15s; }
+.avatar-enlace:hover .avatar { opacity: .85; }
 .datos-autor { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.nombre { font-weight: 600; }
+.nombre { align-self: flex-start; font-weight: 600; color: var(--texto); text-decoration: none; }
+.nombre:hover { text-decoration: underline; }
 .meta { font-size: .85rem; color: var(--texto-secundario); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 .titulo { margin: 0; font-size: 1.2rem; font-weight: 600; line-height: 1.3; }

@@ -1,0 +1,48 @@
+.encabezado { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; }
+.encabezado .titulo-pagina { margin: 0; }
+.resumen { margin: .3rem 0 0; font-size: .9rem; color: var(--texto-secundario); }
+
+.panel {
+  margin-bottom: 1.5rem; padding: 1.25rem;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio);
+}
+.panel-cabecera { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.panel-cabecera h2 { margin: 0; font-size: 1.2rem; font-weight: 600; }
+.cerrar {
+  display: flex; padding: .35rem; border-radius: 50%; background: none; border: none;
+  color: var(--texto-secundario); cursor: pointer;
+}
+.cerrar:hover { background: var(--superficie-2); color: var(--texto); }
+
+.lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
+.fila {
+  display: grid; grid-template-columns: auto 1fr; gap: .5rem 1rem; align-items: center; padding: .9rem 1rem;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: 12px;
+}
+.fila.deshabilitado { opacity: .6; }
+.avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; grid-row: span 2; }
+.datos { min-width: 0; display: flex; flex-direction: column; gap: .1rem; }
+.nombre { align-self: flex-start; font-weight: 600; color: var(--texto); }
+.meta { font-size: .82rem; color: var(--texto-secundario); overflow-wrap: anywhere; }
+
+.insignias { display: flex; flex-wrap: wrap; gap: .4rem; }
+.insignia, .estado-usuario {
+  padding: .15rem .55rem; border-radius: 999px; font-size: .72rem; font-weight: 600; letter-spacing: .03em;
+  border: 1px solid var(--borde); color: var(--texto-secundario);
+}
+.insignia.admin { color: var(--verde-lima); border-color: rgba(175, 252, 65, .4); }
+.estado-usuario { color: var(--verde-claro); border-color: rgba(178, 255, 158, .35); }
+.estado-usuario.inactivo { color: var(--error); border-color: rgba(255, 107, 107, .4); }
+
+.accion { grid-column: 1 / -1; display: flex; justify-content: flex-end; }
+.vos { font-size: .82rem; font-style: italic; color: var(--texto-secundario); }
+
+.estado { display: flex; flex-direction: column; align-items: center; gap: .75rem; }
+.vacio { padding: 2rem 0; text-align: center; color: var(--texto-secundario); }
+
+/* Escritorio: todo en una sola fila */
+@media (min-width: 720px) {
+  .fila { grid-template-columns: auto 1fr auto auto; }
+  .avatar { grid-row: auto; }
+  .accion { grid-column: auto; }
+}

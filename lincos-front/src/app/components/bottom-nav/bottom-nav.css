@@ -1,6 +1,7 @@
+/* Las columnas se reparten solas: 3 para usuarios, más para administradores */
 .bottom-nav {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
   height: calc(64px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom);
   background: rgba(0, 0, 0, .92); backdrop-filter: blur(8px); border-top: 1px solid var(--borde);
 }
